@@ -26,7 +26,12 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+//            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+			url ="jdbc:mysql://127.0.0.1:3306/amtcrowd?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true"
+			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+			username = "amtcrowd"
+			password = "crowdseminar2013"
+			
             pooled = true
             properties {
                maxActive = -1
