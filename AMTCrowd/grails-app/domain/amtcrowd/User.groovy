@@ -13,12 +13,12 @@ class User {
 		workerID nullable:true
 		batchesCompleted nullable:true
 		lastHitRegister nullable:true
-		hit nullable:true
+		hits nullable:true
 		username unique:true
 		mail nullable:true, unique:true
 		hitsCompleted nullable:true
     }
 	
-	static hasMany = [hit:HIT]
+	static hasMany = [hits:HIT]
 		
 }

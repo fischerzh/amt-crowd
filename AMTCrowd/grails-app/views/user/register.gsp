@@ -26,6 +26,14 @@
 					</label>
 					<g:textField name="username" value="${userInstance?.username}" />
 				</div>
+				<div
+					class="fieldcontain ${hasErrors(bean: userInstance, field: 'hitID', 'error')} ">
+					<label for="hitID"> 
+					<g:message code="user.hit.label" default="HIT-ID" />
+
+					</label>
+					<g:textField name="hitID" value="${hitID}" />
+				</div>
 			</fieldset>
 			<fieldset class="buttons">
 				<g:actionSubmit class="save" action="register"

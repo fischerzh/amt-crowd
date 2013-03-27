@@ -7,10 +7,22 @@
 		<title></title>
 	</head>
 	<body>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			
-			</g:if>
+		<g:if test="${flash.message}">
+		<div class="message" role="status">${flash.message}</div>
 		
+		</g:if>
+		<div>
+		<p>
+			<label for="RandomChar"> <g:message code="user.username.label" default="Username:" />
+			${ userInstance.username }
+		</p>
+		<p>
+			<label for="UniqueID">${ uniqueToken }
+		</p>
+		<p>
+			<label for="ScrabbleChars">	${randomString }	
+		
+		</p>
+		</div>
 		
 </body>
