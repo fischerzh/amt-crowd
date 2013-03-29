@@ -18,21 +18,17 @@
 			<g:hiddenField name="version" value="${userInstance?.version}" />
 			<fieldset class="form">
 
-				<div
-					class="fieldcontain ${hasErrors(bean: userInstance, field: 'username', 'error')} ">
-					<label for="username"> <g:message
-							code="user.username.label" default="Username" />
-
+				<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'username', 'error')} required">
+					<label for="username"> 
+						<span class="required-indicator">*</span>
+						<g:message code="user.username.label" default="Username" />
 					</label>
 					<g:textField name="username" value="${userInstance?.username}" />
-				</div>
-				<div
-					class="fieldcontain ${hasErrors(bean: userInstance, field: 'hitID', 'error')} ">
-					<label for="hitID"> 
-					<g:message code="user.hit.label" default="HIT-ID" />
-
+					<label for="password"> 
+						<span class="required-indicator">*</span>
+						<g:message code="user.password.label" default="Password" />
 					</label>
-					<g:textField name="hitID" value="${hitID}" />
+					<g:passwordField name="password" value="${userInstance?.password}" />
 				</div>
 			</fieldset>
 			<fieldset class="buttons">

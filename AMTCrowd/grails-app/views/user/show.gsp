@@ -23,20 +23,20 @@
 			</g:if>
 			<ol class="property-list user">
 			
+				<g:if test="${userInstance?.workerID}">
+				<li class="fieldcontain">
+					<span id="workerID-label" class="property-label"><g:message code="user.workerID.label" default="Worker ID" /></span>
+					
+						<span class="property-value" aria-labelledby="workerID-label"><g:fieldValue bean="${userInstance}" field="workerID"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${userInstance?.batchesCompleted}">
 				<li class="fieldcontain">
 					<span id="batchesCompleted-label" class="property-label"><g:message code="user.batchesCompleted.label" default="Batches Completed" /></span>
 					
 						<span class="property-value" aria-labelledby="batchesCompleted-label"><g:fieldValue bean="${userInstance}" field="batchesCompleted"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${userInstance?.hit}">
-				<li class="fieldcontain">
-					<span id="hit-label" class="property-label"><g:message code="user.hit.label" default="Hit" /></span>
-					
-						<span class="property-value" aria-labelledby="hit-label"><g:link controller="HIT" action="show" id="${userInstance?.hit?.id}">${userInstance?.hit?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -50,11 +50,13 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.mail}">
+				<g:if test="${userInstance?.hits}">
 				<li class="fieldcontain">
-					<span id="mail-label" class="property-label"><g:message code="user.mail.label" default="Mail" /></span>
+					<span id="hits-label" class="property-label"><g:message code="user.hits.label" default="Hits" /></span>
 					
-						<span class="property-value" aria-labelledby="mail-label"><g:fieldValue bean="${userInstance}" field="mail"/></span>
+						<g:each in="${userInstance.hits}" var="h">
+						<span class="property-value" aria-labelledby="hits-label"><g:link controller="HIT" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>
@@ -68,11 +70,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.workerID}">
+				<g:if test="${userInstance?.hitsCompleted}">
 				<li class="fieldcontain">
-					<span id="workerID-label" class="property-label"><g:message code="user.workerID.label" default="Worker ID" /></span>
+					<span id="hitsCompleted-label" class="property-label"><g:message code="user.hitsCompleted.label" default="Hits Completed" /></span>
 					
-						<span class="property-value" aria-labelledby="workerID-label"><g:fieldValue bean="${userInstance}" field="workerID"/></span>
+						<span class="property-value" aria-labelledby="hitsCompleted-label"><g:fieldValue bean="${userInstance}" field="hitsCompleted"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.password}">
+				<li class="fieldcontain">
+					<span id="password-label" class="property-label"><g:message code="user.password.label" default="Password" /></span>
+					
+						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${userInstance}" field="password"/></span>
 					
 				</li>
 				</g:if>

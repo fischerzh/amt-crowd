@@ -24,17 +24,17 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="batchesCompleted" title="${message(code: 'user.batchesCompleted.label', default: 'Batches Completed')}" />
+						<g:sortableColumn property="workerID" title="${message(code: 'user.workerID.label', default: 'Worker ID')}" />
 					
-						<th><g:message code="user.hit.label" default="Hit" /></th>
+						<g:sortableColumn property="batchesCompleted" title="${message(code: 'user.batchesCompleted.label', default: 'Batches Completed')}" />
 					
 						<g:sortableColumn property="lastHitRegister" title="${message(code: 'user.lastHitRegister.label', default: 'Last Hit Register')}" />
 					
-						<g:sortableColumn property="mail" title="${message(code: 'user.mail.label', default: 'Mail')}" />
-					
 						<g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" />
 					
-						<g:sortableColumn property="workerID" title="${message(code: 'user.workerID.label', default: 'Worker ID')}" />
+						<g:sortableColumn property="hitsCompleted" title="${message(code: 'user.hitsCompleted.label', default: 'Hits Completed')}" />
+					
+						<g:sortableColumn property="password" title="${message(code: 'user.password.label', default: 'Password')}" />
 					
 					</tr>
 				</thead>
@@ -42,17 +42,17 @@
 				<g:each in="${userInstanceList}" status="i" var="userInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "batchesCompleted")}</g:link></td>
+						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "workerID")}</g:link></td>
 					
-						<td>${fieldValue(bean: userInstance, field: "hit")}</td>
+						<td>${fieldValue(bean: userInstance, field: "batchesCompleted")}</td>
 					
 						<td><g:formatDate date="${userInstance.lastHitRegister}" /></td>
 					
-						<td>${fieldValue(bean: userInstance, field: "mail")}</td>
-					
 						<td>${fieldValue(bean: userInstance, field: "username")}</td>
 					
-						<td>${fieldValue(bean: userInstance, field: "workerID")}</td>
+						<td>${fieldValue(bean: userInstance, field: "hitsCompleted")}</td>
+					
+						<td>${fieldValue(bean: userInstance, field: "password")}</td>
 					
 					</tr>
 				</g:each>

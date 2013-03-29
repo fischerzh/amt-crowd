@@ -3,7 +3,7 @@ package amtcrowd
 class User {
 	
 	String username
-	String mail
+	String password
 	String workerID
 	Integer batchesCompleted 
 	Date lastHitRegister
@@ -15,7 +15,6 @@ class User {
 		lastHitRegister nullable:true
 		hits nullable:true
 		username unique:true
-		mail nullable:true, unique:true
 		hitsCompleted nullable:true
     }
 	

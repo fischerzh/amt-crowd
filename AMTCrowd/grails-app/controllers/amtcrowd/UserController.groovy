@@ -107,28 +107,30 @@ class UserController {
 			case 'GET':
 				println "GET"
 				def userInstance = new User(params)
-				def hit = new HIT(hitID:1)
-				println hit
-				userInstance.addToHits(hit)
-				[userInstance:userInstance, hitID:hit.id]
+
+				[userInstance:userInstance]
 				break
 				
 			case 'POST':
 				println "POST"
 				println params
 				def dateToday = new Date()
-				def user
 				def newUser = false
 		
 				println "Username: " +params.username
-				if(params.username !=null)
+		        def user = User.findOrCreateByUsername(params.username)
+				
+				if(user)
 				{
-					user = User.findByUsername(params.username)
-					if(!user)
+					println "params.password: " +params.password
+					println "user.password: " +user.password
+					if(user.password != params.password)
 					{
-						user = new User(params)
-						newUser = true
+						flash.message = "Please enter correct username and password!"
+						render(view: "register", model: [userInstance: user])
+						return
 					}
+
 				}
 				else
 				{
@@ -136,30 +138,26 @@ class UserController {
 					render(view: "register", model: [userInstance: user])
 					return
 				}
+
 				def taskAvailable = false
 				def uuid
-				if(!newUser)
+				Integer day = dateToday.date
+				Integer lastDay = user.lastHitRegister.date
+				println "Today: " + day
+				println "Last AMT day: " + lastDay
+				if (day > lastDay )
 				{
-					Integer day = dateToday.date
-					Integer lastDay = user.lastHitRegister.date
-					println "Today: " + day
-					println "Last AMT day: " + lastDay
-					if (day > lastDay )
-					{
-						println "New Task available!"
-						taskAvailable = true
-						user.lastHitRegister = dateToda
-						userInstance.hit = new HIT(hitID:userInstance.id)
-						uuid = UUID.randomUUID().toString()
-						userInstance.hit.uniqueTokenGeneratedID = uuid
-					}
+					println "New Task available!"
+					taskAvailable = true
+					user.lastHitRegister = dateToda
+					userInstance.hit = new HIT(hitID:userInstance.id)
+					uuid = UUID.randomUUID().toString()
+					userInstance.hits.uniqueTokenGeneratedID = uuid
 				}
 				else
 				{
 					user.lastHitRegister = dateToday
 				}
-				
-		
 				
 		//		if (!user.save(flush: true))
 				if(!taskAvailable && !newUser)
