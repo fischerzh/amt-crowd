@@ -118,7 +118,7 @@ class UserController {
 				def newUser = false
 		
 				println "Username: " +params.username
-		        def user = User.findOrCreateByUsername(params.username)
+		        def user = User.findByUsername(params.username)
 				
 				if(user)
 				{
@@ -134,11 +134,13 @@ class UserController {
 				}
 				else
 				{
-					flash.message = "Please enter your username!"
-					render(view: "register", model: [userInstance: user])
-					return
+					// New User to register!
+					user = new User(params)
+					user.lastHitRegister = dateToday
+					user.level = 1
+					newUser = true
 				}
-
+				
 				def taskAvailable = false
 				def uuid
 				Integer day = dateToday.date
@@ -149,33 +151,37 @@ class UserController {
 				{
 					println "New Task available!"
 					taskAvailable = true
-					user.lastHitRegister = dateToda
-					userInstance.hit = new HIT(hitID:userInstance.id)
-					uuid = UUID.randomUUID().toString()
-					userInstance.hits.uniqueTokenGeneratedID = uuid
 				}
 				else
 				{
 					user.lastHitRegister = dateToday
+					taskAvailable = false
 				}
 				
 		//		if (!user.save(flush: true))
 				if(!taskAvailable && !newUser)
 				{
-		//			flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
 					flash.message = "You can only complete ONE Amazon Mechanical Turk Task per day! Please come back tomorrow!"
 					render(view: "register", model: [userInstance: user])
 					return
 				}
 				if(user.save(flush:true))
 				{
+					user.lastHitRegister = dateToday
+					def hit = new HIT(hitID:user.id)
+					uuid = UUID.randomUUID().toString()
+					hit.uniqueTokenGeneratedID = uuid
+					hit.startTime = dateToday
+					user.addToHits(hit) 
+					user.save(flash:true)
 					flash.message = "Please enter this Token to Amazon Mechanical Turk: " + uuid
 					redirect(action: "showamt", id: user.id)
 				}
 				else
 				{
 					flash.message = "Username not found!"
-					redirect(action: "showamt", id: user.id)
+					render(view: "register", model: [userInstance: user])
+					return
 				}
 				
 		//		flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
@@ -190,10 +196,23 @@ class UserController {
 			redirect(action: "showamt")
 			return
 		}
-		
+		def uniqueToken = []
+		uniqueToken = HIT.findAll {println it}
+		println uniqueToken
 		String charset = (('A'..'Z')).join()
 		String randomString = org.apache.commons.lang.RandomStringUtils.random(4, charset.toCharArray())
+		
+		def taskForUser = getTaskForUser(userInstance)
+		println "TaskForUser: " + taskForUser
 
-		[userInstance: userInstance, uniqueToken: flash.message, randomString: randomString]
+		[userInstance: userInstance, uniqueToken: uniqueToken, randomString: randomString, taskForUser:taskForUser]
+	}
+	
+	def getTaskForUser(user)
+	{
+		println "UserLevel: " +user.level
+		def task = Tasks.findByLevel(user.level)
+		
+		return task
 	}
 }

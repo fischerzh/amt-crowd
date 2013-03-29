@@ -23,15 +23,6 @@
 			</g:if>
 			<ol class="property-list HIT">
 			
-				<g:if test="${HITInstance?.batchCompleted}">
-				<li class="fieldcontain">
-					<span id="batchCompleted-label" class="property-label"><g:message code="HIT.batchCompleted.label" default="Batch Completed" /></span>
-					
-						<span class="property-value" aria-labelledby="batchCompleted-label"><g:formatBoolean boolean="${HITInstance?.batchCompleted}" /></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${HITInstance?.batchID}">
 				<li class="fieldcontain">
 					<span id="batchID-label" class="property-label"><g:message code="HIT.batchID.label" default="Batch ID" /></span>
@@ -59,11 +50,56 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${HITInstance?.hitsCompleted}">
+				<g:if test="${HITInstance?.batchCompleted}">
 				<li class="fieldcontain">
-					<span id="hitsCompleted-label" class="property-label"><g:message code="HIT.hitsCompleted.label" default="Hits Completed" /></span>
+					<span id="batchCompleted-label" class="property-label"><g:message code="HIT.batchCompleted.label" default="Batch Completed" /></span>
 					
-						<span class="property-value" aria-labelledby="hitsCompleted-label"><g:fieldValue bean="${HITInstance}" field="hitsCompleted"/></span>
+						<span class="property-value" aria-labelledby="batchCompleted-label"><g:formatBoolean boolean="${HITInstance?.batchCompleted}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.uniqueTokenGeneratedID}">
+				<li class="fieldcontain">
+					<span id="uniqueTokenGeneratedID-label" class="property-label"><g:message code="HIT.uniqueTokenGeneratedID.label" default="Unique Token Generated ID" /></span>
+					
+						<span class="property-value" aria-labelledby="uniqueTokenGeneratedID-label"><g:fieldValue bean="${HITInstance}" field="uniqueTokenGeneratedID"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.uniqueTokenEnteredID}">
+				<li class="fieldcontain">
+					<span id="uniqueTokenEnteredID-label" class="property-label"><g:message code="HIT.uniqueTokenEnteredID.label" default="Unique Token Entered ID" /></span>
+					
+						<span class="property-value" aria-labelledby="uniqueTokenEnteredID-label"><g:fieldValue bean="${HITInstance}" field="uniqueTokenEnteredID"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.startTime}">
+				<li class="fieldcontain">
+					<span id="startTime-label" class="property-label"><g:message code="HIT.startTime.label" default="Start Time" /></span>
+					
+						<span class="property-value" aria-labelledby="startTime-label"><g:formatDate date="${HITInstance?.startTime}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.endTime}">
+				<li class="fieldcontain">
+					<span id="endTime-label" class="property-label"><g:message code="HIT.endTime.label" default="End Time" /></span>
+					
+						<span class="property-value" aria-labelledby="endTime-label"><g:formatDate date="${HITInstance?.endTime}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.user}">
+				<li class="fieldcontain">
+					<span id="user-label" class="property-label"><g:message code="HIT.user.label" default="User" /></span>
+					
+						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${HITInstance?.user?.id}">${HITInstance?.user?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

@@ -24,31 +24,39 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="batchCompleted" title="${message(code: 'HIT.batchCompleted.label', default: 'Batch Completed')}" />
-					
 						<g:sortableColumn property="batchID" title="${message(code: 'HIT.batchID.label', default: 'Batch ID')}" />
 					
 						<g:sortableColumn property="hitID" title="${message(code: 'HIT.hitID.label', default: 'Hit ID')}" />
 					
 						<g:sortableColumn property="hitTypeID" title="${message(code: 'HIT.hitTypeID.label', default: 'Hit Type ID')}" />
 					
-						<g:sortableColumn property="hitsCompleted" title="${message(code: 'HIT.hitsCompleted.label', default: 'Hits Completed')}" />
+						<g:sortableColumn property="batchCompleted" title="${message(code: 'HIT.batchCompleted.label', default: 'Batch Completed')}" />
 					
+						<g:sortableColumn property="uniqueTokenGeneratedID" title="${message(code: 'HIT.uniqueTokenGeneratedID.label', default: 'Unique Token Generated ID')}" />
+					
+						<g:sortableColumn property="uniqueTokenEnteredID" title="${message(code: 'HIT.uniqueTokenEnteredID.label', default: 'Unique Token Entered ID')}" />
+					
+						<g:sortableColumn property="user" title="${message(code: 'User.name.label', default: 'User')}" />
+
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${HITInstanceList}" status="i" var="HITInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${HITInstance.id}">${fieldValue(bean: HITInstance, field: "batchCompleted")}</g:link></td>
-					
-						<td>${fieldValue(bean: HITInstance, field: "batchID")}</td>
+						<td><g:link action="show" id="${HITInstance.id}">${fieldValue(bean: HITInstance, field: "batchID")}</g:link></td>
 					
 						<td>${fieldValue(bean: HITInstance, field: "hitID")}</td>
 					
 						<td>${fieldValue(bean: HITInstance, field: "hitTypeID")}</td>
 					
-						<td>${fieldValue(bean: HITInstance, field: "hitsCompleted")}</td>
+						<td><g:formatBoolean boolean="${HITInstance.batchCompleted}" /></td>
+					
+						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenGeneratedID")}</td>
+					
+						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenEnteredID")}</td>
+						
+						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenEnteredID")}</td>
 					
 					</tr>
 				</g:each>

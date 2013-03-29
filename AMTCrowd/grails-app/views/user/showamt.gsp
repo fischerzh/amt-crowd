@@ -17,10 +17,18 @@
 			${ userInstance.username }
 		</p>
 		<p>
-			<label for="UniqueID">${ uniqueToken }
+			<label for="UniqueID">${ userInstance.hits.uniqueTokenGeneratedID }
 		</p>
 		<p>
 			<label for="ScrabbleChars">	${randomString }	
+		
+		</p>
+		<p>
+			<label for="TaskForUser">	${taskForUser.assignment }	
+		
+		</p>
+				<p>
+			<label for="TaskForUserDescription">	${taskForUser.description }	
 		
 		</p>
 		</div>
