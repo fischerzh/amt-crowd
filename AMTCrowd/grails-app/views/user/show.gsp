@@ -23,6 +23,15 @@
 			</g:if>
 			<ol class="property-list user">
 			
+				<g:if test="${userInstance?.username}">
+				<li class="fieldcontain">
+					<span id="username-label" class="property-label"><g:message code="user.username.label" default="Username" /></span>
+					
+						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${userInstance}" field="username"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${userInstance?.workerID}">
 				<li class="fieldcontain">
 					<span id="workerID-label" class="property-label"><g:message code="user.workerID.label" default="Worker ID" /></span>
@@ -61,20 +70,29 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.username}">
-				<li class="fieldcontain">
-					<span id="username-label" class="property-label"><g:message code="user.username.label" default="Username" /></span>
-					
-						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${userInstance}" field="username"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${userInstance?.hitsCompleted}">
 				<li class="fieldcontain">
 					<span id="hitsCompleted-label" class="property-label"><g:message code="user.hitsCompleted.label" default="Hits Completed" /></span>
 					
 						<span class="property-value" aria-labelledby="hitsCompleted-label"><g:fieldValue bean="${userInstance}" field="hitsCompleted"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.level}">
+				<li class="fieldcontain">
+					<span id="level-label" class="property-label"><g:message code="user.level.label" default="Level" /></span>
+					
+						<span class="property-value" aria-labelledby="level-label"><g:fieldValue bean="${userInstance}" field="level"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.ranking}">
+				<li class="fieldcontain">
+					<span id="ranking-label" class="property-label"><g:message code="user.ranking.label" default="Ranking" /></span>
+					
+						<span class="property-value" aria-labelledby="ranking-label"><g:link controller="ranking" action="show" id="${userInstance?.ranking?.id}">${userInstance?.ranking?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

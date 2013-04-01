@@ -36,8 +36,6 @@
 					
 						<g:sortableColumn property="uniqueTokenEnteredID" title="${message(code: 'HIT.uniqueTokenEnteredID.label', default: 'Unique Token Entered ID')}" />
 					
-						<g:sortableColumn property="user" title="${message(code: 'User.name.label', default: 'User')}" />
-
 					</tr>
 				</thead>
 				<tbody>
@@ -54,8 +52,6 @@
 					
 						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenGeneratedID")}</td>
 					
-						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenEnteredID")}</td>
-						
 						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenEnteredID")}</td>
 					
 					</tr>

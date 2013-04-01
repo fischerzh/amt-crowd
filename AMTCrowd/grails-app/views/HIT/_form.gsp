@@ -66,6 +66,38 @@
 	<g:datePicker name="endTime" precision="day"  value="${HITInstance?.endTime}" default="none" noSelection="['': '']" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: HITInstance, field: 'overallPerformance', 'error')} ">
+	<label for="overallPerformance">
+		<g:message code="HIT.overallPerformance.label" default="Overall Performance" />
+		
+	</label>
+	<g:field name="overallPerformance" value="${fieldValue(bean: HITInstance, field: 'overallPerformance')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: HITInstance, field: 'performanceQuality', 'error')} ">
+	<label for="performanceQuality">
+		<g:message code="HIT.performanceQuality.label" default="Performance Quality" />
+		
+	</label>
+	<g:field name="performanceQuality" value="${fieldValue(bean: HITInstance, field: 'performanceQuality')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: HITInstance, field: 'points', 'error')} ">
+	<label for="points">
+		<g:message code="HIT.points.label" default="Points" />
+		
+	</label>
+	<g:field name="points" value="${fieldValue(bean: HITInstance, field: 'points')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: HITInstance, field: 'task', 'error')} required">
+	<label for="task">
+		<g:message code="HIT.task.label" default="Task" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="task" name="task.id" from="${amtcrowd.Tasks.list()}" optionKey="id" required="" value="${HITInstance?.task?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: HITInstance, field: 'user', 'error')} required">
 	<label for="user">
 		<g:message code="HIT.user.label" default="User" />

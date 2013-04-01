@@ -32,6 +32,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${tasksInstance?.hits}">
+				<li class="fieldcontain">
+					<span id="hits-label" class="property-label"><g:message code="tasks.hits.label" default="Hits" /></span>
+					
+						<g:each in="${tasksInstance.hits}" var="h">
+						<span class="property-value" aria-labelledby="hits-label"><g:link controller="HIT" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${tasksInstance?.assignment}">
 				<li class="fieldcontain">
 					<span id="assignment-label" class="property-label"><g:message code="tasks.assignment.label" default="Assignment" /></span>

@@ -1,5 +1,7 @@
 package amtcrowd
 
+import groovy.time.*
+
 class HIT {
 
 	String batchID
@@ -10,6 +12,11 @@ class HIT {
 	String uniqueTokenEnteredID
 	Date startTime
 	Date endTime
+	Float overallPerformance
+//	Date performanceTime = endTime-startTime
+	Float performanceQuality
+	Float points
+	
 	
     static constraints = {
 		batchID nullable:true
@@ -20,8 +27,12 @@ class HIT {
 		uniqueTokenEnteredID nullable:true, unique:true
 		startTime nullable:true
 		endTime nullable:true
+		overallPerformance nullable:true
+//		performanceTime nullable:true
+		performanceQuality nullable:true
+		points nullable:true
     }
 	
-	static belongsTo = [user:User]
+	static belongsTo = [user:User, task:Tasks]
 	
 }

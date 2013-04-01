@@ -95,6 +95,42 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${HITInstance?.overallPerformance}">
+				<li class="fieldcontain">
+					<span id="overallPerformance-label" class="property-label"><g:message code="HIT.overallPerformance.label" default="Overall Performance" /></span>
+					
+						<span class="property-value" aria-labelledby="overallPerformance-label"><g:fieldValue bean="${HITInstance}" field="overallPerformance"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.performanceQuality}">
+				<li class="fieldcontain">
+					<span id="performanceQuality-label" class="property-label"><g:message code="HIT.performanceQuality.label" default="Performance Quality" /></span>
+					
+						<span class="property-value" aria-labelledby="performanceQuality-label"><g:fieldValue bean="${HITInstance}" field="performanceQuality"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.points}">
+				<li class="fieldcontain">
+					<span id="points-label" class="property-label"><g:message code="HIT.points.label" default="Points" /></span>
+					
+						<span class="property-value" aria-labelledby="points-label"><g:fieldValue bean="${HITInstance}" field="points"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${HITInstance?.task}">
+				<li class="fieldcontain">
+					<span id="task-label" class="property-label"><g:message code="HIT.task.label" default="Task" /></span>
+					
+						<span class="property-value" aria-labelledby="task-label"><g:link controller="tasks" action="show" id="${HITInstance?.task?.id}">${HITInstance?.task?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${HITInstance?.user}">
 				<li class="fieldcontain">
 					<span id="user-label" class="property-label"><g:message code="HIT.user.label" default="User" /></span>
