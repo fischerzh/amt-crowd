@@ -196,9 +196,11 @@ class UserController {
 			redirect(action: "showamt")
 			return
 		}
-		def uniqueToken = []
-		uniqueToken = HIT.findAll {println it}
-		println uniqueToken
+//		def hitForUser = HIT.createCriteria().list{
+//			
+//		}
+		
+		
 		String charset = (('A'..'Z')).join()
 		String randomString = org.apache.commons.lang.RandomStringUtils.random(4, charset.toCharArray())
 		
