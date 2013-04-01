@@ -20,7 +20,9 @@ class HITController {
     }
 
     def save() {
-        def HITInstance = new HIT(params)
+        def HITInstance = new HIT(params)		
+		HITInstance.points = HITInstance.overallPerformance / HITInstance.performanceQuality * 1000
+		
         if (!HITInstance.save(flush: true)) {
             render(view: "create", model: [HITInstance: HITInstance])
             return

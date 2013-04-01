@@ -9,6 +9,7 @@ class User {
 	Date lastHitRegister
 	Integer hitsCompleted
 	Integer level = 1
+	Float points
 
     static constraints = {
 		username unique:true
@@ -19,6 +20,7 @@ class User {
 		hitsCompleted nullable:true
 		level nullable:true
 		ranking nullable:true
+		points nullable:true
     }
 	
 	static hasMany = [hits:HIT]

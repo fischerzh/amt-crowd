@@ -10,9 +10,48 @@ class RankingController {
         redirect(action: "list", params: params)
     }
 
+	def calculateRanking() {
+		def userList = User.getAll();		
+		userList.each() {
+			user -> calculateUserRanking(user)
+		}		
+	}
+	
+	def calculateUserRanking(User user) {
+		def hitList = user.hits
+		float totalPoints = 0;
+		
+		hitList.each() {
+			hit -> totalPoints += hit.points
+		}
+		user.points = totalPoints
+	}
+	
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [rankingInstanceList: Ranking.list(params), rankingInstanceTotal: Ranking.count()]
+        def maxValue = Math.min(max ?: 10, 100)
+				
+		def rankingList = []
+		def pos= 1;
+		def userList = User.list(max: maxValue, sort: "points", order: "desc");
+		
+		userList.each() {
+			user -> 
+			def ranking = new Ranking();
+			ranking.position = pos;
+			
+			if(pos < 25) {
+				ranking.level = 1;
+			}
+			else if( pos > 25 && pos < 50) {
+				ranking.level = 2;
+			}
+			
+			ranking.AddToUsers(user);
+			rankingList.add(ranking);
+			pos++;
+		}
+		
+        [rankingInstanceList: rankingList, rankingInstanceTotal: rankingList.count()]
     }
 
     def create() {
