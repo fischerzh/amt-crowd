@@ -206,8 +206,8 @@ class UserController {
 		
 		def taskForUser = getTaskForUser(userInstance)
 		println "TaskForUser: " + taskForUser
-
-		[userInstance: userInstance, uniqueToken: uniqueToken, randomString: randomString, taskForUser:taskForUser]
+//		uniqueToken = userInstance.hits
+		[userInstance: userInstance, randomString: randomString, taskForUser:taskForUser]
 	}
 	
 	def getTaskForUser(user)
