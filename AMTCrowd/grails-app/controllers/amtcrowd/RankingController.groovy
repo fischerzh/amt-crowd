@@ -36,8 +36,16 @@ class RankingController {
 		
 		userList.each() {
 			user -> 
-			def ranking = new Ranking();
-			ranking.position = pos;
+			
+			def ranking;
+			
+			if(user.ranking) {
+				ranking = user.ranking;
+			}
+			else { 
+				ranking = new Ranking();
+			}
+				ranking.position = pos;
 			
 			if(pos < 25) {
 				ranking.level = 1;
@@ -45,14 +53,14 @@ class RankingController {
 			else if( pos > 25 && pos < 50) {
 				ranking.level = 2;
 			}
-			
-			ranking.addToUsers(user);
+			user.ranking = ranking;
+
 			ranking.save(flush: true);
 			rankingList.add(ranking);
 			pos++;
 		}
 		def count = rankingList.size()
-		
+		println rankingList.toString()
         [rankingInstanceList: rankingList, rankingInstanceTotal: count]
     }
 

@@ -32,11 +32,10 @@
 				</thead>
 				<tbody>
 				<g:each in="${rankingInstanceList}" status="i" var="rankingInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${rankingInstance.id}">${fieldValue(bean: rankingInstance, field: "level")}</g:link></td>
-						<td>${fieldValue(bean: rankingInstanceList, field: "position")}</td>
-						<td>${fieldValue(bean: rankingInstanceList, field: "users")}</td>
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">					
+						<td>${fieldValue(bean: rankingInstance, field: "level")}</td>
+						<td>${fieldValue(bean: rankingInstance, field: "position")}</td>
+						<td>${fieldValue(bean: rankingInstance, field: "users")}</td>
 						
 					</tr>
 				</g:each>

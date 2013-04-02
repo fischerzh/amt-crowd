@@ -26,5 +26,9 @@ class User {
 	static hasMany = [hits:HIT]
 	
 	static belongsTo = [ranking:Ranking]
+	
+	String toString()  {
+		return username? username: ""
+	}
 		
 }
