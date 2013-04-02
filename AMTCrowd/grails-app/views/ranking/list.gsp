@@ -25,6 +25,8 @@
 					<tr>
 					
 						<g:sortableColumn property="level" title="${message(code: 'ranking.level.label', default: 'Level')}" />
+						<g:sortableColumn property="position" title="${message(code: 'ranking.position.label', default: 'Position')}" />
+						<g:sortableColumn property="users" title="${message(code: 'ranking.position.label', default: 'User')}" />
 					
 					</tr>
 				</thead>
@@ -33,7 +35,9 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${rankingInstance.id}">${fieldValue(bean: rankingInstance, field: "level")}</g:link></td>
-					
+						<td>${fieldValue(bean: rankingInstanceList, field: "position")}</td>
+						<td>${fieldValue(bean: rankingInstanceList, field: "users")}</td>
+						
 					</tr>
 				</g:each>
 				</tbody>

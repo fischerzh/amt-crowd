@@ -46,12 +46,14 @@ class RankingController {
 				ranking.level = 2;
 			}
 			
-			ranking.AddToUsers(user);
+			ranking.addToUsers(user);
+			ranking.save(flush: true);
 			rankingList.add(ranking);
 			pos++;
 		}
+		def count = rankingList.size()
 		
-        [rankingInstanceList: rankingList, rankingInstanceTotal: rankingList.count()]
+        [rankingInstanceList: rankingList, rankingInstanceTotal: count]
     }
 
     def create() {
