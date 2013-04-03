@@ -7,9 +7,10 @@ class User {
 	String workerID
 	Integer batchesCompleted 
 	Date lastHitRegister
-	Integer hitsCompleted
+	Integer hitsCompleted = 0
 	Integer level = 1
-	Float points
+	Integer rankingPosition
+	Float totalPoints
 
     static constraints = {
 		username unique:true
@@ -19,16 +20,23 @@ class User {
 		hits nullable:true
 		hitsCompleted nullable:true
 		level nullable:true
-		ranking nullable:true
-		points nullable:true
+		totalPoints nullable:true
+		rankingPosition unique:true, nullable:true
     }
 	
 	static hasMany = [hits:HIT]
-	
-	static belongsTo = [ranking:Ranking]
-	
+			
 	String toString()  {
 		return username? username: ""
 	}
+	
+	def afterUpdate()
+	{
+		hitsCompleted = hits!=null?hits.size():0
+	}
 		
+	def afterInsert()
+	{
+		hitsCompleted = hits!=null?hits.size():0
+	}
 }

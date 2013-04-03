@@ -88,14 +88,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.ranking}">
-				<li class="fieldcontain">
-					<span id="ranking-label" class="property-label"><g:message code="user.ranking.label" default="Ranking" /></span>
-					
-						<span class="property-value" aria-labelledby="ranking-label"><g:link controller="ranking" action="show" id="${userInstance?.ranking?.id}">${userInstance?.ranking?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
 			
 				<g:if test="${userInstance?.password}">
 				<li class="fieldcontain">

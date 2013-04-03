@@ -11,8 +11,11 @@ class Tasks {
     static constraints = {
 		description nullable:true
 		hits nullable:true
+		factor nullable:true
+//		users nullable: true
     }
 	
 	static hasMany = [hits:HIT]
+		
 	
 }

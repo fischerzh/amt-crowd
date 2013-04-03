@@ -1,5 +1,7 @@
 package amtcrowd
 
+import java.util.Formatter.DateTime;
+
 import org.springframework.dao.DataIntegrityViolationException
 
 class UserController {
@@ -116,7 +118,6 @@ class UserController {
 				println params
 				def dateToday = new Date()
 				def newUser = false
-		
 				println "Username: " +params.username
 		        def user = User.findByUsername(params.username)
 				
@@ -143,11 +144,9 @@ class UserController {
 				
 				def taskAvailable = false
 				def uuid
-				Integer day = dateToday.date
-				Integer lastDay = user.lastHitRegister.date
-				println "Today: " + day
-				println "Last AMT day: " + lastDay
-				if (day > lastDay )
+//				Integer day = dateToday.date
+				isNewDay(user.lastHitRegister)
+				if (isNewDay(user.lastHitRegister))
 				{
 					println "New Task available!"
 					taskAvailable = true
@@ -168,13 +167,13 @@ class UserController {
 				if(user.save(flush:true))
 				{
 					user.lastHitRegister = dateToday
-					def hit = new HIT(hitID:user.id)
-					uuid = UUID.randomUUID().toString()
-					hit.uniqueTokenGeneratedID = uuid
-					hit.startTime = dateToday
-					user.addToHits(hit) 
+//					def hit = new HIT(hitID:user.id)
+//					uuid = UUID.randomUUID().toString()
+//					hit.uniqueTokenGeneratedID = uuid
+//					hit.startTime = dateToday
+//					user.addToHits(hit) 
 					user.save(flash:true)
-					flash.message = "Please enter this Token to Amazon Mechanical Turk: " + uuid
+//					flash.message = "Please enter this Token to Amazon Mechanical Turk: " + uuid
 					redirect(action: "showamt", id: user.id)
 				}
 				else
@@ -199,22 +198,89 @@ class UserController {
 //		def hitForUser = HIT.createCriteria().list{
 //			
 //		}
-		
-		
+				
 		String charset = (('A'..'Z')).join()
 		String randomString = org.apache.commons.lang.RandomStringUtils.random(4, charset.toCharArray())
 		
 		def taskForUser = getTaskForUser(userInstance)
 		println "TaskForUser: " + taskForUser
-//		uniqueToken = userInstance.hits
-		[userInstance: userInstance, randomString: randomString, taskForUser:taskForUser]
+		
+//		println "Hits for User: " + userInstance.hits.max{ it.id }
+		def uniqueToken
+		taskForUser.hits.each{ it->
+			if(it.user == userInstance)
+			{
+				println "Hit for User: " + it
+				uniqueToken = it
+			}
+		}
+//		def uniqueToken = userInstance.hits.max{ it.id }
+
+		println "uniqueToken: " + uniqueToken.uniqueTokenGeneratedID
+		uniqueToken.save(flush:true)
+		[userInstance: userInstance, uniqueToken: uniqueToken, taskForUser:taskForUser]
 	}
 	
 	def getTaskForUser(user)
 	{
 		println "UserLevel: " +user.level
-		def task = Tasks.findByLevel(user.level)
+//		def tasksList =	Tasks.createCriteria.list {
+//			if(user.level) eq("level", user.level)
+////			if(user) not{ 'in' ("users",it.users)}
+//		}
+		def results = Tasks.findAllByLevel(user.level)
+		println "Tasks for Level " + user.level + results
+		def filteredResults = []
+
+		def userHitTasks = HIT.findAllByUser(user)
+		if(userHitTasks)
+		{
+			println "user Hit Tasks: " +userHitTasks.task
+			filteredResults = results - userHitTasks
+		}
+		else
+		{
+			filteredResults = results
+		}
 		
-		return task
+		if(userHitTasks in filteredResults)
+			println "still there"
+
+		println "User Task List: Not yet done: " +filteredResults
+				
+		int rand = new Random().nextInt(filteredResults.size())
+		int randId = new Random().nextInt(250)
+		def randomTask = filteredResults[rand]
+
+		println "Random Task: " +randomTask
+		
+		def hit = new HIT()
+		def uuid = UUID.randomUUID().toString()
+		hit.uniqueTokenGeneratedID = uuid
+		hit.startTime = new Date()
+		hit.save(flush:true)
+		
+		user.addToHits(hit)
+		if(user.hitsCompleted)
+			user.hitsCompleted +=1
+		else
+			user.hitsCompleted = 1
+		user.save(flush:true)
+		println user
+		randomTask.addToHits(hit)
+		randomTask.save(flush:true)
+		
+		return randomTask
+	}
+	
+	def isNewDay(date)
+	{
+		def dateToday = new Date()
+		def dateTodayOfYear = dateToday.getAt(Calendar.DAY_OF_YEAR)
+		def dateLastTaskOfYear = date.getAt(Calendar.DAY_OF_YEAR)
+		println "dateLastTaskOfYear: " + dateLastTaskOfYear
+		println "dateTodayOfYear: " + dateTodayOfYear
+		
+		return dateTodayOfYear > dateLastTaskOfYear
 	}
 }

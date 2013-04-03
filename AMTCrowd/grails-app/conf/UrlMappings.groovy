@@ -14,6 +14,11 @@ class UrlMappings {
 			controller ="user"
 			action = "register"
 		}
+		
+		"/ranking/rankinglist" {
+			controller ="ranking"
+			action = "rankinglist"
+		}
 				
 	}
 }

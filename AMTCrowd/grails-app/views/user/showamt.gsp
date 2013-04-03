@@ -21,7 +21,7 @@
 		</p>
 		<p>
 			<label for="UniqueID"> <g:message
-					code="user.UniqueToken.label" default="Unique Token:" /> ${ userInstance.hits.uniqueTokenGeneratedID }
+					code="user.UniqueToken.label" default="Unique Token:" /> ${ uniqueToken.uniqueTokenGeneratedID }
 		</p>
 		<%--		<p>--%>
 		<%--			<label for="ScrabbleChars">	${randomString }	--%>

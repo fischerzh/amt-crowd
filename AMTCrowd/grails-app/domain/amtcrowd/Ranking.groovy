@@ -1,13 +1,12 @@
 package amtcrowd
 
 class Ranking {
-
-	Integer level
-	Integer position
+	
+	String rankingName
 	
     static constraints = {
-		level nullable: true
-		position nullable:true
+		users nullable:true
+		rankingName nullable:true
     }
 	
 	static hasMany = [users:User]

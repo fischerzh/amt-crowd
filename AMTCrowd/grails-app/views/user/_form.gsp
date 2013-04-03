@@ -67,13 +67,6 @@
 	<g:field name="level" type="number" value="${userInstance.level}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'ranking', 'error')} ">
-	<label for="ranking">
-		<g:message code="user.ranking.label" default="Ranking" />
-		
-	</label>
-	<g:select id="ranking" name="ranking.id" from="${amtcrowd.Ranking.list()}" optionKey="id" value="${userInstance?.ranking?.id}" class="many-to-one" noSelection="['null': '']"/>
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} ">
 	<label for="password">

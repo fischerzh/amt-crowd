@@ -20,7 +20,7 @@ class HIT {
 	
     static constraints = {
 		batchID nullable:true
-		hitID unique:true
+		hitID nullable:true
 		hitTypeID nullable:true
 		batchCompleted nullable:true
 		uniqueTokenGeneratedID nullable:true, unique:true

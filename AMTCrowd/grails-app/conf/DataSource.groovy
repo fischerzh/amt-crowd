@@ -13,7 +13,7 @@ environments {
 		dataSource {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
-			dbCreate = "update"
+			dbCreate = "create-drop"
 			url ="jdbc:mysql://46.163.77.113:3306/amtcrowd?useUnicode=yes&characterEncoding=UTF-8"
 			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 			username = "amtcrowd"

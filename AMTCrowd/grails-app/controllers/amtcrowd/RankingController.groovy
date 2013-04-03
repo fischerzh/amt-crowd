@@ -2,68 +2,86 @@ package amtcrowd
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.CeilingCall;
+
 class RankingController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", rankinglist: ["GET","POST"]]
 
+	def userRankingList = User.list(sort:"totalPoints", order: "desc")
+	def totalUsers = userRankingList.size()
+	def top10 = Math.ceil(totalUsers*0.1)
+	def top50 = Math.ceil(totalUsers*0.5)	
+	
     def index() {
         redirect(action: "list", params: params)
     }
 
-	def calculateRanking() {
+	def calculateRanking(Ranking ranking) {
 		def userList = User.getAll();		
 		userList.each() {
 			user -> calculateUserRanking(user)
-		}		
+		}
+		println "userList "  + userList
+		userList.each() {user ->
+			def returnedUser = calculateRankingPosition(user) 
+			println "Returned User"  + returnedUser
+			ranking.addToUsers(returnedUser)
+			ranking.save(flush:true)
+		}
+		println "Ranking After Calc" + ranking
 	}
 	
 	def calculateUserRanking(User user) {
 		def hitList = user.hits
 		float totalPoints = 0;
 		
-		hitList.each() {
-			hit -> totalPoints += hit.points
+		hitList.each() {hit -> 
+			if(hit.points)
+				totalPoints += hit.points
 		}
-		user.points = totalPoints
+		user.totalPoints = totalPoints
+		println "TotalPoints: " + user.totalPoints
 	}
 	
-    def list(Integer max) {
-        def maxValue = Math.min(max ?: 10, 100)
-				
-		def rankingList = []
-		def pos= 1;
-		def userList = User.list(max: maxValue, sort: "points", order: "desc");
-		
-		userList.each() {
-			user -> 
-			
-			def ranking;
-			
-			if(user.ranking) {
-				ranking = user.ranking;
-			}
-			else { 
-				ranking = new Ranking();
-			}
-				ranking.position = pos;
-			
-			if(pos < 25) {
-				ranking.level = 1;
-			}
-			else if( pos > 25 && pos < 50) {
-				ranking.level = 2;
-			}
-			user.ranking = ranking;
-
-			ranking.save(flush: true);
-			rankingList.add(ranking);
-			pos++;
+	def calculateRankingPosition(User user) {
+		println "Total Users" + totalUsers
+		println "Top 10" + top10
+		println "Top 50" + top50
+		def userRanking = userRankingList.findIndexOf {
+			println "User Ranking according to Points: " +it
+			it == user
 		}
-		def count = rankingList.size()
-		println rankingList.toString()
-        [rankingInstanceList: rankingList, rankingInstanceTotal: count]
+		println "User Ranking Position: " + userRanking+1
+		user.rankingPosition = userRanking+1
+		if(userRanking <= top10)
+			user.level = 3
+		if(userRanking > top10 && userRanking <= top50)
+			user.level = 2
+		else
+			user.level = 1
+		println "User " + user.username + " :" + user.level
+		user.save(flush:true)
+		return user
+//		ranking.addToUsers(user)
+//		ranking.save(flush:true)
+	}
+	
+    def rankinglist() {
+		def ranking = Ranking.findByRankingName("AMTRanking")?:new Ranking(rankingName:"AMTRanking").save(failOnError:true)
+		println ranking
+		calculateRanking(ranking)
+//		def userList = userRankingList;
+		println ranking
+		println ranking.users
+        [rankingInstanceList: ranking.users]
     }
 
+    def list(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        [rankingInstanceList: Ranking.list(params), rankingInstanceTotal: Ranking.count()]
+    }
+    
     def create() {
         [rankingInstance: new Ranking(params)]
     }
