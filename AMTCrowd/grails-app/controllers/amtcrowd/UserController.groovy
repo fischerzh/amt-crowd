@@ -236,15 +236,23 @@ class UserController {
 		if(userHitTasks)
 		{
 			println "user Hit Tasks: " +userHitTasks.task
-			filteredResults = results - userHitTasks
+			filteredResults = results - userHitTasks.task
 		}
 		else
 		{
 			filteredResults = results
 		}
-		
-		if(userHitTasks in filteredResults)
-			println "still there"
+//		filteredResults.each { f->
+//			userHitTasks.task.each{ u->
+//				if(f == u)
+//				{
+//					filteredResults.remove(u)
+//					"Removed "  + u
+//				}
+//			}
+//		}
+//		if(filteredResults.contains(userHitTasks))
+//			println "still there"
 
 		println "User Task List: Not yet done: " +filteredResults
 				

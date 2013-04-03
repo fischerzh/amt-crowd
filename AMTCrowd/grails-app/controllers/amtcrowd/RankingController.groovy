@@ -49,14 +49,13 @@ class RankingController {
 		println "Top 10" + top10
 		println "Top 50" + top50
 		def userRanking = userRankingList.findIndexOf {
-			println "User Ranking according to Points: " +it
 			it == user
 		}
 		println "User Ranking Position: " + userRanking+1
 		user.rankingPosition = userRanking+1
-		if(userRanking <= top10)
+		if(userRanking <= top10 && user.hitsCompleted > 5)
 			user.level = 3
-		if(userRanking > top10 && userRanking <= top50)
+		if(userRanking > top10 && userRanking <= top50 && user.hitsCompleted > 2)
 			user.level = 2
 		else
 			user.level = 1
