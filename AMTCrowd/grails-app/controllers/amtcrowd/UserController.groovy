@@ -5,7 +5,6 @@ import java.util.Formatter.DateTime;
 import org.springframework.dao.DataIntegrityViolationException
 
 class UserController {
-
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", register:["GET","POST"]]
 
     def index() {
@@ -135,11 +134,21 @@ class UserController {
 				}
 				else
 				{
-					// New User to register!
-					user = new User(params)
-					user.lastHitRegister = dateToday
-					user.level = 1
-					newUser = true
+					println "User count: " + User.count()
+					if(User.count() > 30)
+					{
+						flash.message = "There are already 30 users registered!"
+						render(view: "register", model: [userInstance: user])
+						return
+					}
+					else
+					{
+						// New User to register!
+						user = new User(params)
+						user.lastHitRegister = dateToday
+						user.level = 1
+						newUser = true
+					}
 				}
 				
 				def taskAvailable = false

@@ -28,7 +28,11 @@
 						<span class="required-indicator">*</span>
 						<g:message code="user.password.label" default="Password" />
 					</label>
-					<g:passwordField name="password" value="${userInstance?.password}" />
+					<g:passwordField name="password" />
+				</div>
+				<div>
+					<span id="message-label" class="property-label"><g:message code="user.message.label" default="Note: " /></span>
+					${flash.message}</span>
 				</div>
 			</fieldset>
 			<fieldset class="buttons">

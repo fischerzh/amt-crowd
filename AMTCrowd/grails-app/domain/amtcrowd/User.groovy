@@ -13,7 +13,8 @@ class User {
 	Float totalPoints
 
     static constraints = {
-		username unique:true
+		username blank:false, unique:true
+		password blank: false
 		workerID nullable:true
 		batchesCompleted nullable:true
 		lastHitRegister nullable:true
