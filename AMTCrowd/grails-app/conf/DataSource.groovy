@@ -14,7 +14,7 @@ environments {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
 			dbCreate = "update"
-			url ="jdbc:mysql://46.163.77.113:3306/amtcrowd?useUnicode=yes&characterEncoding=UTF-8"
+			url ="jdbc:mysql://46.163.77.113:3306/amtcrowd_test?useUnicode=yes&characterEncoding=UTF-8"
 			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 			username = "amtcrowd"
 			password = "crowdseminar2013"
@@ -34,7 +34,7 @@ environments {
 			dbCreate = "update"
 			
 //            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-			url ="jdbc:mysql://127.0.0.1:3306/amtcrowd?useUnicode=yes&characterEncoding=UTF-8"
+			url ="jdbc:mysql://127.0.0.1:3306/amtcrowd_test?useUnicode=yes&characterEncoding=UTF-8"
 			dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 			username = "amtcrowd"
 			password = "crowdseminar2013"
