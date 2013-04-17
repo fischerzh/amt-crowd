@@ -46,24 +46,19 @@ class RankingController {
 	
 	def calculateRankingPosition(User user) {
 		println "Total Users" + totalUsers
-		println "Top 10" + top10
-		println "Top 50" + top50
 		def userRanking = userRankingList.findIndexOf {
 			it == user
 		}
 		println "User Ranking Position: " + userRanking+1
 		user.rankingPosition = userRanking+1
-		if(userRanking <= top10 && user.hitsCompleted > 5)
-			user.level = 3
-		if(userRanking > top10 && userRanking <= top50 && user.hitsCompleted > 2)
+		if(user.totalPoints >= 2500 && user.hitsCompleted > 5)
 			user.level = 2
 		else
 			user.level = 1
 		println "User " + user.username + " :" + user.level
 		user.save(flush:true)
 		return user
-//		ranking.addToUsers(user)
-//		ranking.save(flush:true)
+
 	}
 	
     def rankinglist() {

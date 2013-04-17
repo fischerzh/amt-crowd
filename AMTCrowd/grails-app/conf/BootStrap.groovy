@@ -25,6 +25,9 @@ class BootStrap {
 		def tasklevel118 = Tasks.findById(18) ?: new Tasks(level: 1, factor: 1, assignment:'o,s,u,n,m', result: '', description: 'Find at least 3 words with the provided 5 letters. The words must be real english words and will be double checked with dict.leo.org! No double use of a letter is possible.').save(failOnError: true)
 				
 		
+		def tasklevel2 = Tasks.findById(20) ?: new Tasks(level: 2, factor: 1, assignment:'Please enter your result in the following manner, beginning with your 5 letters, then providing 5 possible solutions to it: "k,w,a,l,e / walk, leak, weal, law, elk"', result: '', description: 'Please create a scrabble task. Define 5 letters, with which it is possible to find at least 5 words containing at least 3 of the defined letters. The words must be real english words and will be double checked with dict.leo.org!').save(failOnError: true)
+		
+		
 //		def tasklevel2 = Tasks.findById(5) ?: new Tasks(level: 2, factor: 1.5, assignment:'{{0,-1},{1,0}}.{{1,2},{3,4}}+{{2,-1},{-1,2}}', result: '{{-1,-5},{0,4}}', description: 'Find the solution to the given matrices calculation!').save(failOnError: true)
 //		def tasklevel3 = Tasks.findById(6) ?: new Tasks(level: 3, factor: 2, assignment:'Chose a firm is considering marketing a new product in Region 1 or Region 2. Region 1: 30% chance of making $4M profit, 70% of $2M loss. \n Region 2: 30% chance of making $3M profit, 70% chance of $1M loss.', 
 //						result: 'Region 2', description: 'In what region should the new product be marketed? The cost of marketing the product is $0.1M').save(failOnError: true)

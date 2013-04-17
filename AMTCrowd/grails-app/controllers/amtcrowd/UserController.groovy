@@ -232,6 +232,7 @@ class UserController {
 	
 	def getTaskForUser(user)
 	{
+		def randomTask
 		println "UserLevel: " +user.level
 //		def tasksList =	Tasks.createCriteria.list {
 //			if(user.level) eq("level", user.level)
@@ -240,36 +241,29 @@ class UserController {
 		def results = Tasks.findAllByLevel(user.level)
 		println "Tasks for Level " + user.level + results
 		def filteredResults = []
-
-		def userHitTasks = HIT.findAllByUser(user)
-		if(userHitTasks)
+		if(user.level == 1)
 		{
-			println "user Hit Tasks: " +userHitTasks.task
-			filteredResults = results - userHitTasks.task
+			def userHitTasks = HIT.findAllByUser(user)
+			if(userHitTasks)
+			{
+				println "user Hit Tasks: " +userHitTasks.task
+				filteredResults = results - userHitTasks.task
+			}
+			else
+			{
+				filteredResults = results
+			}
+			int rand = new Random().nextInt(filteredResults.size())
+			
+			randomTask = filteredResults[rand]
+			
+			println "Random Task: " +randomTask
+			
 		}
 		else
 		{
-			filteredResults = results
+			randomTask = Tasks.findByLevel(2)
 		}
-//		filteredResults.each { f->
-//			userHitTasks.task.each{ u->
-//				if(f == u)
-//				{
-//					filteredResults.remove(u)
-//					"Removed "  + u
-//				}
-//			}
-//		}
-//		if(filteredResults.contains(userHitTasks))
-//			println "still there"
-
-		println "User Task List: Not yet done: " +filteredResults
-				
-		int rand = new Random().nextInt(filteredResults.size())
-		int randId = new Random().nextInt(250)
-		def randomTask = filteredResults[rand]
-
-		println "Random Task: " +randomTask
 		
 		def hit = new HIT()
 		def uuid = UUID.randomUUID().toString()
