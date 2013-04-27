@@ -12,19 +12,28 @@
 	<table>
 		<thead>
 			<tr>
-				<g:sortableColumn property="position" title="${message(code: 'ranking.position.label', default: 'Position')}" />
-				<g:sortableColumn property="userName" title="${message(code: 'ranking.position.label', default: 'User')}" />
-				<g:sortableColumn property="level" title="${message(code: 'ranking.level.label', default: 'Level')}" />
-				<g:sortableColumn property="level" title="${message(code: 'ranking.Points.label', default: 'Points')}" />
+				<g:sortableColumn property="userName" title="${message(code: 'ranking.user.label', default: 'User')}" />
+				<g:sortableColumn property="position" title="${message(code: 'ranking.position.label', default: 'Overall Rank')}" />
+				<g:sortableColumn property="Points" title="${message(code: 'ranking.Points.label', default: 'Points')}" />
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${rankingInstanceList}" status="i" var="user">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">					
-				<td>${user.rankingPosition}</td>
 				<td>${user.username}</td>
-				<td>${user.level}</td>
+				<td>${user.rankingPosition}</td>
 				<td>${user.totalPoints}</td>
+				<td>
+				<g:if test="${user.level == 1}">
+					<img src="${resource(dir: 'images', file: 'silver_medal.png')}" alt="Grails" height="50pt" width="50pt" />
+					Silver ${user.level}
+				</g:if>
+				<g:else>
+					<img src="${resource(dir: 'images', file: 'gold_medal.png')}" alt="Grails" height="50pt" width="50pt" />
+					Gold ${user.level}
+				</g:else>
+				</td>
 			</tr>
 		</g:each>
 		</tbody>

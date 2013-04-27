@@ -15,6 +15,17 @@ class UrlMappings {
 			action = "register"
 		}
 		
+		"/user/showamt/$id" {
+			controller = "user"
+			action = "showamt"
+		}
+		
+		"/user/index" {
+			controller ="user"
+			action = "index"
+		}
+		
+		
 		"/ranking/rankinglist" {
 			controller ="ranking"
 			action = "rankinglist"

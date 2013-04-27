@@ -37,7 +37,7 @@
 			</fieldset>
 			<fieldset class="buttons">
 				<g:actionSubmit class="save" action="register"
-					value="${message(code: 'Register', default: 'Register')}" />
+					value="${message(code: 'Register', default: 'Get Task')}" />
 				
 			</fieldset>
 		</g:form>

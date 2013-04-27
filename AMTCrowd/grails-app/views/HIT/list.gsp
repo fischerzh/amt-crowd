@@ -25,16 +25,17 @@
 					<tr>
 										
 						<g:sortableColumn property="hitID" title="${message(code: 'HIT.hitID.label', default: 'Hit ID')}" />
+						
+						<g:sortableColumn property="user" title="${message(code: 'HIT.user.label', default: 'User')}" />
 					
 						<g:sortableColumn property="hitTypeID" title="${message(code: 'HIT.hitTypeID.label', default: 'Hit Type ID')}" />
 					
-						<g:sortableColumn property="batchCompleted" title="${message(code: 'HIT.batchCompleted.label', default: 'Batch Completed')}" />
+						<g:sortableColumn property="points" title="${message(code: 'HIT.points.label', default: 'Points')}" />
 					
 						<g:sortableColumn property="uniqueTokenGeneratedID" title="${message(code: 'HIT.uniqueTokenGeneratedID.label', default: 'Unique Token Generated ID')}" />
 					
 						<g:sortableColumn property="uniqueTokenEnteredID" title="${message(code: 'HIT.uniqueTokenEnteredID.label', default: 'Unique Token Entered ID')}" />
 					
-						<g:sortableColumn property="user" title="${message(code: 'HIT.user.label', default: 'User')}" />
 					
 					</tr>
 				</thead>
@@ -44,15 +45,16 @@
 										
 						<td><g:link action="show" id="${HITInstance.id}">${fieldValue(bean: HITInstance, field: "id")}</g:link></td>
 					
+						<td>${fieldValue(bean: HITInstance.user, field: "username")}</td>
+					
 						<td>${fieldValue(bean: HITInstance, field: "hitTypeID")}</td>
 					
-						<td><g:formatBoolean boolean="${HITInstance.batchCompleted}" /></td>
+						<td>${fieldValue(bean: HITInstance, field: "points")}</td>
 					
 						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenGeneratedID")}</td>
 					
 						<td>${fieldValue(bean: HITInstance, field: "uniqueTokenEnteredID")}</td>
 					
-						<td>${fieldValue(bean: HITInstance.user, field: "username")}</td>
 					</tr>
 				</g:each>
 				</tbody>

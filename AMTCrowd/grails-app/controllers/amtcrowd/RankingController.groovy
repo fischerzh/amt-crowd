@@ -10,29 +10,32 @@ class RankingController {
 
 	def userRankingList = User.list(sort:"totalPoints", order: "desc")
 	def totalUsers = userRankingList.size()
-	def top10 = Math.ceil(totalUsers*0.1)
-	def top50 = Math.ceil(totalUsers*0.5)	
+	def ranking
+//	def top10 = Math.ceil(totalUsers*0.1)
+//	def top50 = Math.ceil(totalUsers*0.5)	
 	
     def index() {
         redirect(action: "list", params: params)
     }
 
 	def calculateRanking(Ranking ranking) {
-		def userList = User.getAll();		
-		userList.each() {
-			user -> calculateUserRanking(user)
-		}
+		def userList = User.findAll()	
 		println "userList "  + userList
-		userList.each() {user ->
-			def returnedUser = calculateRankingPosition(user) 
-			println "Returned User"  + returnedUser
-			ranking.addToUsers(returnedUser)
+		println "Total Users" + totalUsers
+		
+		userList.collect() { 
+			println it
+			calculatePoints(it)
+			calculateRankingLevel(it)
+			calculateRankingPosition(it)
+			ranking.addToUsers(it)
 			ranking.save(flush:true)
 		}
+
 		println "Ranking After Calc" + ranking
 	}
 	
-	def calculateUserRanking(User user) {
+	def calculatePoints(User user) {
 		def hitList = user.hits
 		float totalPoints = 0;
 		
@@ -41,33 +44,39 @@ class RankingController {
 				totalPoints += hit.points
 		}
 		user.totalPoints = totalPoints
-		println "TotalPoints: " + user.totalPoints
+		println "TotalPoints for User '" +user.username + "': "+ user.totalPoints
+		user.save(flush:true)
 	}
 	
-	def calculateRankingPosition(User user) {
-		println "Total Users" + totalUsers
-		def userRanking = userRankingList.findIndexOf {
-			it == user
-		}
-		println "User Ranking Position: " + userRanking+1
-		user.rankingPosition = userRanking+1
-		if(user.totalPoints >= 2500 && user.hitsCompleted > 5)
+	def calculateRankingLevel(User user) {
+//		def userRanking = userRankingList.findIndexOf {
+//			it == user
+//		}
+		if(user.totalPoints >= 5000 )//&& user.hitsCompleted > 5)
 			user.level = 2
 		else
 			user.level = 1
-		println "User " + user.username + " :" + user.level
+		println "Userlevel " + user.username + " :" + user.level
 		user.save(flush:true)
-		return user
 
 	}
 	
+	def calculateRankingPosition(User user)
+	{
+		def usersByRanking = User.findAll(sort:"totalPoints", order:"desc")
+		println "users By Ranking: " + usersByRanking
+		
+	}
+	
     def rankinglist() {
-		def ranking = Ranking.findByRankingName("AMTRanking")?:new Ranking(rankingName:"AMTRanking").save(failOnError:true)
+		ranking = Ranking.findByRankingName("AMTRanking")?:new Ranking(rankingName:"AMTRanking").save(flush:true)
 		println ranking
 		calculateRanking(ranking)
 //		def userList = userRankingList;
 		println ranking
 		println ranking.users
+		def rankingList = ranking.users.toList() //sort:"rankingPosition", order:"desc")
+		println "rankingList: " +rankingList
         [rankingInstanceList: ranking.users]
     }
 

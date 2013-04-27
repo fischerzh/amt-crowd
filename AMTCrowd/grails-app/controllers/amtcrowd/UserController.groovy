@@ -135,45 +135,49 @@ class UserController {
 				else
 				{
 					println "User count: " + User.count()
-					if(User.count() > 30)
-					{
-						flash.message = "There are already 30 users registered!"
-						render(view: "register", model: [userInstance: user])
-						return
-					}
-					else
-					{
-						// New User to register!
-						user = new User(params)
-						user.lastHitRegister = dateToday
-						user.level = 1
-						newUser = true
-					}
+
+					// New User to register!
+					user = new User(params)
+					user.lastHitRegister = dateToday
+					user.level = 1
+					newUser = true
 				}
 				
 				def taskAvailable = false
 				def uuid
 //				Integer day = dateToday.date
-				isNewDay(user.lastHitRegister)
-				if (isNewDay(user.lastHitRegister))
-				{
-					println "New Task available!"
-					taskAvailable = true
-				}
-				else
-				{
-					user.lastHitRegister = dateToday
-					taskAvailable = false
-				}
+//				isNewDay(user.lastHitRegister)
 				
-		//		if (!user.save(flush: true))
-				if(!taskAvailable && !newUser)
+//				if (isNewDay(user.lastHitRegister))
+//				{
+//					println "New Task available!"
+//					taskAvailable = true
+//				}
+//				else
+//				{
+//					user.lastHitRegister = dateToday
+//					taskAvailable = false
+//				}
+				taskAvailable = true
+				println "Hits completed: " + user.hitsCompleted
+				if(user.hitsCompleted >= 30)
 				{
-					flash.message = "You can only complete ONE Amazon Mechanical Turk Task per day! Please come back tomorrow!"
+					flash.message = "You have already solved 30 Tasks. Thank you very much for your contribution!"
 					render(view: "register", model: [userInstance: user])
 					return
 				}
-				if(user.save(flush:true))
+				
+//				if(!taskAvailable && !newUser)
+//				{
+//					flash.message = "You can only complete ONE Amazon Mechanical Turk Task per day! Please come back tomorrow!"
+//					render(view: "register", model: [userInstance: user])
+//					return
+//				}
+				if(user.hasErrors()){
+					user.errors.allErrors.each{println it}
+				 }
+				
+				if(user.save(failOnError:true))
 				{
 					user.lastHitRegister = dateToday
 //					def hit = new HIT(hitID:user.id)

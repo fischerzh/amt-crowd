@@ -23,9 +23,12 @@ class User {
 		level nullable:true
 		totalPoints nullable:true
 		rankingPosition unique:true, nullable:true
+		ranking nullable:true
     }
 	
 	static hasMany = [hits:HIT]
+	
+	static belongsTo = [ranking:Ranking]
 			
 	String toString()  {
 		return username? username: ""
@@ -35,8 +38,13 @@ class User {
 	{
 		hitsCompleted = hits!=null?hits.size():0
 	}
+	
+	def beforeValidate()
+	{
+		hitsCompleted = hits!=null?hits.size():0
+	}
 		
-	def afterInsert()
+	def onLoad()
 	{
 		hitsCompleted = hits!=null?hits.size():0
 	}
